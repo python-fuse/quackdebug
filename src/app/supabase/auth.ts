@@ -16,6 +16,20 @@ class AuthService {
     }
   }
 
+  async getUser() {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Error getting user:", error);
+      return null;
+    }
+
+    return user;
+  }
+
   async signOut() {
     const { error } = await supabase.auth.signOut();
 
