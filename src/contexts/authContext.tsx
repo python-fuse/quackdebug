@@ -1,7 +1,7 @@
 "use client";
 
-import { supabase } from "@/app/supabase";
-import authService from "@/app/supabase/auth";
+import { supabase } from "@/supabase";
+import authService from "@/supabase/auth";
 import { User } from "@supabase/supabase-js";
 import {
   useContext,

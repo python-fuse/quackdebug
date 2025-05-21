@@ -1,5 +1,5 @@
 "use client";
-import authService from "@/app/supabase/auth";
+import authService from "@/supabase/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
