@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 interface RecordingsProps {
@@ -31,6 +31,8 @@ const Recordings = ({ recordings }: RecordingsProps) => {
   );
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string>("");
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
   const toggleRecording = async () => {
     if (isRecording) {
@@ -40,14 +42,19 @@ const Recordings = ({ recordings }: RecordingsProps) => {
     }
 
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    setStream(stream);
     const recorder = new MediaRecorder(stream);
-    const chunks: Blob[] = [];
+    // audioChunksRef.current = [];
 
-    recorder.ondataavailable = (event) => chunks.push(event.data);
+    recorder.ondataavailable = (event) => {
+      audioChunksRef.current.push(event.data);
+      setAudioChunks((prev) => [...prev, event.data]);
+    };
 
     recorder.onstop = async () => {
-      const audioBlob = new Blob(chunks, { type: "audio/webm" });
-      setAudioChunks([]);
+      const audioBlob = new Blob(audioChunksRef.current, {
+        type: "audio/webm",
+      });
 
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(audioUrl);
@@ -57,8 +64,26 @@ const Recordings = ({ recordings }: RecordingsProps) => {
 
     recorder.start();
     setMediaRecorder(recorder);
-    setAudioChunks(chunks);
     setIsRecording(true);
+  };
+
+  const cancelRecording = () => {
+    setAudioUrl("");
+    setTranscript(null);
+    setAudioChunks([]);
+    setIsModalOpen(false);
+    setIsRecording(false);
+
+    if (mediaRecorder && mediaRecorder.state !== "inactive") {
+      mediaRecorder.stop();
+    }
+
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
+
+    audioChunksRef.current = [];
   };
 
   return (
@@ -94,42 +119,74 @@ const Recordings = ({ recordings }: RecordingsProps) => {
 
       {/* New recording modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[425px] md:min-w-1/2">
+        <DialogContent className="sm:max-w-[600px] p-6">
           <DialogHeader>
-            <DialogTitle>New Recording</DialogTitle>
+            <DialogTitle className="text-2xl font-semibold">
+              New Recording
+            </DialogTitle>
             <DialogDescription>
-              Click the duck to start recording. Click again to stop.
+              Click the duck to start recording. Use the controls to pause, save
+              or cancel.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="mt-4 flex ">
-            {/* Record controller */}
-            <button className="rounded-full p-4 bg-transparent border  hover:bg-blue-600/30 transition duration-200">
+          {/* Recorder Section */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-start sm:gap-6 mt-4">
+            {/* Duck Icon Button */}
+            <button
+              className={`rounded-full border-2 border-blue-500 p-2 hover:bg-blue-100 transition`}
+              onClick={toggleRecording}
+            >
               <Image
                 src="/logo.png"
                 alt="Duck"
                 width={100}
                 height={100}
-                className={`${
-                  isRecording ? "duck-recording" : ""
-                } cursor-pointer`}
-                onClick={toggleRecording}
+                className={`${isRecording ? "animate-pulse" : ""}`}
               />
             </button>
 
-            {audioUrl && <audio src={audioUrl} controls />}
-
-            {/* Transcription preview */}
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold">Transcription Preview</h3>
-              {isTranscribing ? (
-                <p>Transcribing...</p>
-              ) : transcript ? (
-                <textarea>{transcript}</textarea>
-              ) : (
-                <p>No transcription available yet.</p>
+            {/* Audio Controls and Actions */}
+            <div className="flex flex-col items-start mt-4 sm:mt-0 sm:items-start gap-3 w-full">
+              {audioUrl && (
+                <audio
+                  src={audioUrl}
+                  controls
+                  className="w-full max-w-xs bg-gray-100 rounded-md shadow"
+                />
               )}
+
+              <div className="flex gap-2">
+                <Button
+                  variant="default"
+                  disabled={audioUrl === ""}
+                  onClick={() => {
+                    /* save logic here */
+                  }}
+                >
+                  Save Recording
+                </Button>
+
+                <Button variant="destructive" onClick={cancelRecording}>
+                  Cancel
+                </Button>
+              </div>
             </div>
+          </div>
+
+          {/* Transcription Preview */}
+          <div className="mt-6 w-full">
+            <h3 className="text-lg font-medium mb-2">Transcription Preview</h3>
+            {isTranscribing ? (
+              <p className="text-gray-500">Transcribing...</p>
+            ) : (
+              <textarea
+                className="w-full min-h-[100px] p-2 border rounded-md resize-none"
+                placeholder="No transcription available yet."
+                value={transcript || ""}
+                onChange={(e) => setTranscript(e.target.value)}
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>
