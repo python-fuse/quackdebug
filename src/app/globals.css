@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+* {
+  @apply box-border;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -123,4 +127,43 @@
 
 button:hover {
   cursor: pointer;
+}
+
+/* Growing and shrinking animation */
+.animate-grow {
+  animation: grow 1s cubic-bezier(0.4, 0, 0.6, 1.4) infinite alternate;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes tapeWobble {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-1deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(1.5deg) scale(0.98);
+  }
+  75% {
+    transform: rotate(-1deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.duck-recording {
+  animation: tapeWobble 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }

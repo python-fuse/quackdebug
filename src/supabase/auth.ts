@@ -24,7 +24,7 @@ class AuthService {
 
     if (error) {
       console.error("Error getting user:", error);
-      return null;
+      throw error;
     }
 
     return user;
@@ -35,7 +35,7 @@ class AuthService {
 
     if (error) {
       console.error("Error signing out:", error);
-      return null;
+      return error;
     }
   }
 }
