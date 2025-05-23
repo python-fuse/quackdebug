@@ -24,10 +24,11 @@ class DB {
       .single();
   }
 
-  static async getSessions() {
+  static async getSessions(userId: string) {
     return await supabase
       .from("debug_sessions")
       .select("*")
+      .eq("owner_id", userId)
       .order("created_at", { ascending: false });
   }
 
