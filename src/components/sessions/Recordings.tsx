@@ -1,6 +1,6 @@
 import { Recording, RecordingInsert } from "@/lib/definitions";
 import { Button } from "../ui/button";
-import { Speech } from "lucide-react";
+import { Speech, Trash } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,9 @@ import Image from "next/image";
 import Storage from "@/supabase/storage";
 import DB from "@/supabase/db";
 import Spinner from "../ui/spinner";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { supabase } from "@/supabase";
+import { toast } from "@/lib/utils";
 
 interface RecordingsProps {
   recordings: Recording[];
@@ -21,11 +24,9 @@ interface RecordingsProps {
 
 const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [recording, setRecording] = useState<Recording | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [isTranscribing, setIsTranscribing] = useState(false);
   const [transcript, setTranscript] = useState<string>("");
 
   // Recorder and speech recognition setup
@@ -75,7 +76,7 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
 
       recognition.onerror = (event: SpeechRecognitionEvent) => {
         console.error("Speech recognition error", event.error);
-        setError(`Speech recognition error: ${event.error}`);
+        toast("error", "Speech recognition error");
       };
 
       recognitionRef.current = recognition;
@@ -127,7 +128,7 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
       setIsRecording(true);
     } catch (err) {
       console.error("Error starting recording:", err);
-      setError("Failed to access microphone");
+      toast("error", "Failed to access microphone");
     }
   };
 
@@ -183,9 +184,12 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
 
       const res = await DB.createRecording(newRecording);
 
-      console.log(res);
+      setIsModalOpen(false);
+      cancelRecording();
+      toast("success", "Recording saved successfully");
     } catch (error) {
       console.log(error);
+      toast("error", "Failed to save recording");
     } finally {
       setIsLoading(false);
     }
@@ -194,7 +198,7 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
   return (
     <>
       {/* Main recordings tab */}
-      <div className="w-1/2 p-4">
+      <div className="w-1/2 p-4 overflow-y-auto">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Recordings</h2>
           <Button
@@ -205,19 +209,41 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
             <Speech /> New Recording
           </Button>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col gap-y-2 ">
           {recordings.length === 0 && (
             <div className=" text-gray-500">
               No recordings available for this session.
             </div>
           )}
 
-          {recordings.map((recording) => (
-            <div key={recording.id} className="p-4 border-b border-gray-300">
-              <h3 className="text-lg font-semibold">{recording.id}</h3>
-              <p>{recording.transcript}</p>
-            </div>
-          ))}
+          {recordings.map(
+            (recording: Recording) => {
+              return (
+                <Card key={recording.id}>
+                  <CardContent className="flex justify-between gap-4">
+                    <div className="flex flex-col gap-y-4 flex-1">
+                      <audio
+                        src={Storage.getUrl(
+                          recording.audio_url.replace("recordings/", "")
+                        )}
+                        controls
+                      />
+
+                      <pre className="border rounded-md p-2 bg-gray-100/50 text-sm font-">
+                        {recording.transcript}
+                      </pre>
+                    </div>
+
+                    <Button variant={"outline"}>
+                      <Trash className="text-red-500" size={4} />
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            }
+
+            // a recording card with the player and transcript below it
+          )}
         </div>
       </div>
 
@@ -281,7 +307,7 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
             </Button>
 
             <Button
-              disabled={!transcript || isTranscribing || isLoading}
+              disabled={!transcript || isLoading || isRecording}
               onClick={() => {
                 handleSaveRecording();
               }}

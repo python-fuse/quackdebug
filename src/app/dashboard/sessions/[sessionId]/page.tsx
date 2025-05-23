@@ -6,6 +6,7 @@ import { capitalize } from "@/lib/utils";
 import DB from "@/supabase/db";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "@/lib/utils";
 
 const page = () => {
   const params = useParams();
@@ -34,12 +35,13 @@ const page = () => {
 
       if (notesRes.error) {
         console.error("Error fetching notes:", notesRes.error);
+        toast("error", notesRes.error.message);
       } else {
         setNotes(notesRes.data);
       }
 
       if (recordingsRes.error) {
-        console.error("Error fetching recordings:", recordingsRes.error);
+        toast("error", recordingsRes.error.message);
       } else {
         setRecordings(recordingsRes.data);
       }
@@ -55,7 +57,7 @@ const page = () => {
       <SessionHeader session={session} />
 
       {/* Split screen notes and recordings */}
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row-reverse overflow-y-auto">
         {/* Notes */}
         <Notes notes={notes} sessionId={sessionId} />
 

@@ -11,15 +11,20 @@ class Storage {
       .from("recordings")
       .upload(`${sessionId}/${filename}`, blob, {
         cacheControl: "3600",
-        upsert: false,
       });
 
     if (error) {
       throw error;
     }
 
-    return data?.fullPath;
+    return data?.path;
   }
+
+  static getUrl = (filePath: string) => {
+    const { data } = supabase.storage.from("recordings").getPublicUrl(filePath);
+    // console.log(data.publicUrl);
+    return data.publicUrl;
+  };
 }
 
 export default Storage;

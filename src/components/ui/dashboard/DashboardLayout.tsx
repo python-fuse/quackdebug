@@ -11,12 +11,12 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthProvider>
-      <div>
+      <div className="max-h-screen">
         <Header />
-        <div className="flex">
+        <div className="flex h-[calc(100dvh-66.8px)]">
           <Sidebar />
 
-          <main className="flex-1 p-4">{children}</main>
+          <main className="flex-1 p-4  overflow-y-auto">{children}</main>
         </div>
       </div>
     </AuthProvider>
