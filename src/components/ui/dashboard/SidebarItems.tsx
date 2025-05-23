@@ -17,7 +17,15 @@ const SidebarItems = () => {
 const SidebarItem = ({ item }: { item: SidebarLink }) => {
   const activePath = usePathname();
 
-  const isActive = activePath === item.href;
+  // include all the paths that start with the current path
+  let isActive = false;
+  if (activePath === item.href) {
+    isActive = true;
+  } else if (activePath.startsWith(item.href) && item.href !== "/dashboard") {
+    {
+      isActive = true;
+    }
+  }
 
   return (
     <Link
