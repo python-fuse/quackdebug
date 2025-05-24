@@ -16,6 +16,7 @@ import Spinner from "../ui/spinner";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { supabase } from "@/supabase";
 import { toast } from "@/lib/utils";
+import Player from "../global/Player";
 
 interface RecordingsProps {
   recordings: Recording[];
@@ -222,11 +223,18 @@ const Recordings = ({ recordings, sessionId }: RecordingsProps) => {
                 <Card key={recording.id}>
                   <CardContent className="flex justify-between gap-4">
                     <div className="flex flex-col gap-y-4 flex-1">
-                      <audio
+                      {/* <audio
                         src={Storage.getUrl(
                           recording.audio_url.replace("recordings/", "")
                         )}
                         controls
+                      /> */}
+
+                      {/* New custom player with wavesurfer */}
+                      <Player
+                        audioSrc={Storage.getUrl(
+                          recording.audio_url.replace("recordings/", "")
+                        )}
                       />
 
                       <pre className="border rounded-md p-2 bg-gray-100/50 text-sm font-">
