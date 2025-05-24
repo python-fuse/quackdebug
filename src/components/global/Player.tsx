@@ -50,7 +50,7 @@ const Player: React.FC<PlayerProps> = ({ audioSrc }) => {
 
         <Button
           variant={"outline"}
-          className="aspect-square w-max rounded-full"
+          className="aspect-square w-max rounded-full bg-blue-500 text-white hover:bg-blue-600"
           onClick={onPlayPause}
           disabled={!wavesurfer}
         >

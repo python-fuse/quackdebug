@@ -62,7 +62,7 @@ const page = () => {
         <Notes notes={notes} sessionId={sessionId} />
 
         {/* Recordings */}
-        <Recordings recordings={recordings} sessionId={sessionId} />
+        <Recordings initialRecordings={recordings} sessionId={sessionId} />
       </div>
     </>
   );
