@@ -31,14 +31,14 @@ const Player: React.FC<PlayerProps> = ({ audioSrc }) => {
       <WavesurferPlayer
         height={50}
         waveColor={"blue"}
-        barWidth={4}
+        barWidth={3}
         url={audioSrc}
         onReady={onReady}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />
 
-      <div className="flex items-center space-x-2 justify-center">
+      <div className="flex items-center space-x-2 mt-4 justify-center">
         <Button
           variant={"outline"}
           className="aspect-square w-max rounded-full"

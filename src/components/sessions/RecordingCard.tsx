@@ -44,31 +44,35 @@ const RecordingCard: FC<RecordingCardProps> = ({ recording, refetch }) => {
 
   return (
     <>
-      <Card key={recording.id}>
-        <CardContent className="flex justify-between gap-4">
-          <div className="flex flex-col gap-y-4 flex-1">
-            {/* <audio
-                src={Storage.getUrl(
-                    recording.audio_url.replace("recordings/", "")
-                )}
-                controls
-            /> */}
+      <Card key={recording.id} className="flex-1">
+        <CardContent className="flex flex-col gap-4 py-4">
+          <div className="flex justify-between items-center w-full">
+            <h3 className="text-sm  text-gray-500">
+              {new Date(recording.created_at ?? "").toLocaleString()}
+            </h3>
+            <Button
+              variant="outline"
+              className="h-8 w-8 p-0"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Trash className="text-red-500 h-4 w-4" />
+            </Button>
+          </div>
 
-            {/* New custom player with wavesurfer */}
-            <Player
-              audioSrc={Storage.getUrl(
-                recording.audio_url.replace("recordings/", "")
-              )}
-            />
+          {/* Custom player with wavesurfer */}
+          <Player
+            audioSrc={Storage.getUrl(
+              recording.audio_url.replace("recordings/", "")
+            )}
+          />
 
-            <pre className="border rounded-md p-2 bg-gray-100/50 text-sm font-">
+          <div className="w-full">
+            <h4 className="text-sm font-semibold mb-2">Transcript</h4>
+            {/* Display transcript with preformatted text */}
+            <pre className="border rounded-md p-2 bg-gray-100/50 text-sm font-light w-full max-h-40 overflow-y-auto whitespace-pre-line break-words">
               {recording.transcript}
             </pre>
           </div>
-
-          <Button variant={"outline"} onClick={() => setIsModalOpen(true)}>
-            <Trash className="text-red-500" size={4} />
-          </Button>
         </CardContent>
       </Card>
 
