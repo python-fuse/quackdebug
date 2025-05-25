@@ -104,7 +104,10 @@ const RecordingModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && cancelRecording()}>
-      <DialogContent className="sm:max-w-[425px] md:min-w-1/2">
+      <DialogContent
+        className="sm:max-w-[425px] md:min-w-1/2"
+        onInteractOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>New Recording</DialogTitle>
           <DialogDescription>

@@ -18,9 +18,10 @@ import { toast } from "@/lib/utils";
 
 interface RecordingCardProps {
   recording: Recording;
+  refetch: () => Promise<void>;
 }
 
-const RecordingCard: FC<RecordingCardProps> = ({ recording }) => {
+const RecordingCard: FC<RecordingCardProps> = ({ recording, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +39,7 @@ const RecordingCard: FC<RecordingCardProps> = ({ recording }) => {
     toast("success", "Recording deleted successfully");
     setIsModalOpen(false);
     setIsLoading(false);
+    await refetch();
   };
 
   return (

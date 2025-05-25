@@ -52,7 +52,11 @@ const Recordings = ({ initialRecordings, sessionId }: RecordingsProps) => {
           )}
 
           {recordings.map((recording: Recording) => (
-            <RecordingCard recording={recording} key={recording.id} />
+            <RecordingCard
+              recording={recording}
+              key={recording.id}
+              refetch={handleRecordingSaved}
+            />
           ))}
         </div>
       </div>
