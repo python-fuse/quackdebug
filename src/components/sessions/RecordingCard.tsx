@@ -4,7 +4,7 @@ import { Recording } from "@/lib/definitions";
 import Player from "../global/Player";
 import Storage from "@/supabase/storage";
 import { Button } from "../ui/button";
-import { Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -55,7 +55,7 @@ const RecordingCard: FC<RecordingCardProps> = ({ recording, refetch }) => {
               className="h-8 w-8 p-0"
               onClick={() => setIsModalOpen(true)}
             >
-              <Trash className="text-red-500 h-4 w-4" />
+              <Trash2 className="text-red-500 h-4 w-4" />
             </Button>
           </div>
 

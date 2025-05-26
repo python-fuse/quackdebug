@@ -55,14 +55,14 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="/auth/login">
+            <Link href="/auth/signin">
               <Button variant="outline" size="sm">
                 Log in
               </Button>
             </Link>
-            <Link href="/auth/signup">
+            {/* <Link href="/auth/signup">
               <Button size="sm">Sign up</Button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </header>
@@ -80,28 +80,28 @@ export default function LandingPage() {
               thoughts, and helps you solve problems faster.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link href="/auth/signup">
+              <Link href="/auth/sigin">
                 <Button size="lg" className="gap-2">
                   Get Started <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link
-                href="https://github.com/yourusername/quackdebug"
+              {/* <Link
+                href="https://github.com/python-fuse/quackdebug"
                 target="_blank"
               >
                 <Button variant="outline" size="lg" className="gap-2">
                   <Github className="h-4 w-4" /> GitHub
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
-          <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 border rounded-2xl shadow-lg">
             <Image
               src="/logo.png"
               alt="QuackDebug in action"
               width={500}
               height={500}
-              className="mx-auto rounded-xl shadow-xl"
+              className="mx-auto rounded-xl"
             />
             <div className="space-y-4">
               <h2 className="text-3xl font-bold">
@@ -164,6 +164,7 @@ export default function LandingPage() {
                 </p>
               </CardContent>
             </Card>
+
             <Card>
               <CardHeader>
                 <Headphones className="h-10 w-10 text-primary mb-2" />
@@ -180,6 +181,7 @@ export default function LandingPage() {
                 </p>
               </CardContent>
             </Card>
+
             <Card>
               <CardHeader>
                 <Code className="h-10 w-10 text-primary mb-2" />
@@ -195,7 +197,8 @@ export default function LandingPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card>
+
+            {/* <Card>
               <CardHeader>
                 <Sparkles className="h-10 w-10 text-primary mb-2" />
                 <CardTitle>Smart Analysis</CardTitle>
@@ -209,7 +212,7 @@ export default function LandingPage() {
                   suggests improvements to your debugging approach.
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </section>
 
@@ -348,7 +351,7 @@ export default function LandingPage() {
                 debugging process with QuackDebug.
               </p>
               <Button size="lg" variant="secondary" className="mt-4">
-                <Link href="/auth/signup">Get Started for Free</Link>
+                <Link href="/auth/signin">Get Started for Free</Link>
               </Button>
             </div>
           </div>
@@ -383,7 +386,7 @@ export default function LandingPage() {
               Privacy
             </Link>
             <Link
-              href="#"
+              href="mailto:umarlinuxmint@gmail.com"
               className="text-sm text-muted-foreground hover:underline underline-offset-4"
             >
               Contact

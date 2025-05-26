@@ -2,9 +2,20 @@
 import authService from "@/supabase/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
   return (
     <div className="flex">
       <div className="image w-1/3 h-screen bg-blue-500"></div>

@@ -11,6 +11,7 @@ const useAuth = () => {
     const checkAuth = async () => {
       try {
         const user = await authService.getUser();
+        setIsAuthenticated(!!user);
       } catch (error) {
         console.error("Error getting user:", error);
         setIsAuthenticated(false);
