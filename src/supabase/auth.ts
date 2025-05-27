@@ -1,5 +1,9 @@
 import { supabase } from "./index";
 class AuthService {
+  redirectTo =
+    process.env.NEXT_PUBLIC_ENVIRONMENT == "dev"
+      ? "http://localhost:3000/dashboard"
+      : "https://quackdebug.vercel.app/dashboard";
   async signInWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
