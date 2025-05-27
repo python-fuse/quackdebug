@@ -1,14 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useUser } from "@/contexts/authContext";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { Card, CardContent } from "@/components/ui/card";
 import StatsCard from "@/components/ui/dashboard/StatsCard";
 import RecentSessions from "@/components/ui/dashboard/RecentSessions";
-import { Clock, Activity, FileText, Zap, Speech } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Clock, Activity, FileText, Speech } from "lucide-react";
 import db from "@/supabase/db";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/lib/utils";

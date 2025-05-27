@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import WavesurferPlayer from "@wavesurfer/react";
 import { Button } from "../ui/button";
-import { FastForward, Forward, Pause, Play, Rewind } from "lucide-react";
+import { FastForward, Pause, Play, Rewind } from "lucide-react";
 
 interface PlayerProps {
   audioSrc: string;
@@ -17,7 +18,8 @@ const Player: React.FC<PlayerProps> = ({ audioSrc }) => {
   };
 
   const onPlayPause = () => {
-    wavesurfer && wavesurfer.playPause();
+    if (!wavesurfer) return;
+    wavesurfer.playPause();
   };
 
   const skip = (seconds: number) => {

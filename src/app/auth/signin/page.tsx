@@ -2,11 +2,11 @@
 import authService from "@/supabase/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const SignIn = () => {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
   // Redirect to dashboard if already authenticated
@@ -54,4 +54,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SignIn;

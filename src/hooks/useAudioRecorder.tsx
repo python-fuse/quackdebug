@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { toast } from "@/lib/utils";
 
 interface UseAudioRecorderReturn {
@@ -25,7 +25,7 @@ export default function useAudioRecorder(): UseAudioRecorderReturn {
   const audioChunksRef = useRef<Blob[]>([]);
 
   // Clean up function for media resources
-  const cleanupMedia = () => {
+  const cleanupMedia = useCallback(() => {
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
       setStream(null);
@@ -34,12 +34,11 @@ export default function useAudioRecorder(): UseAudioRecorderReturn {
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
     }
-  };
-
+  }, [stream, audioUrl]);
   // Clean up on unmount
   useEffect(() => {
     return () => cleanupMedia();
-  }, []);
+  }, [cleanupMedia]);
 
   const startRecording = async () => {
     try {

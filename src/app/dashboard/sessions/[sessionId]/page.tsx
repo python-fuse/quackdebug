@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 import { toast } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import Spinner from "@/components/ui/spinner";
 
-const page = () => {
+const SessionPage = () => {
   const params = useParams();
   const sessionId: string = params.sessionId as string;
   const [loading, setLoading] = useState(true);
@@ -52,6 +53,14 @@ const page = () => {
     };
     fetchAll();
   }, [sessionId]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -105,4 +114,4 @@ const SessionHeader = ({ session }: { session: DebugSession | null }) => {
   );
 };
 
-export default page;
+export default SessionPage;

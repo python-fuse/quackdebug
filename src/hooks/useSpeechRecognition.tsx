@@ -21,6 +21,7 @@ export default function useSpeechRecognition({
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
   const finalTranscriptRef = useRef<string>("");
 

@@ -43,7 +43,6 @@ const RecordingModal = ({
 
   const {
     transcript,
-    isListening,
     startListening,
     stopListening,
     resetTranscript,

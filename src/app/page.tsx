@@ -107,7 +107,7 @@ export default function LandingPage() {
             />
             <div className="space-y-4">
               <h2 className="text-3xl font-bold">
-                Debug Like You're Talking to a Friend
+                Debug Like You&apos;re Talking to a Friend
               </h2>
               <p className="text-muted-foreground">
                 Explain your code problems out loud, and QuackDebug will capture
@@ -248,8 +248,8 @@ export default function LandingPage() {
                   Talk Through Your Problem
                 </h3>
                 <p className="text-muted-foreground">
-                  Explain the issue out loud as if you're talking to a colleague
-                  or rubber duck.
+                  Explain the issue out loud as if you&apos;re talking to a
+                  colleague or rubber duck.
                 </p>
               </div>
               <div className="flex flex-col items-center text-center">
@@ -292,9 +292,9 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <p className="italic">
-                  "QuackDebug has completely changed how I approach difficult
-                  bugs. Talking through problems out loud and having everything
-                  recorded has been a game-changer."
+                  &quot;QuackDebug has completely changed how I approach
+                  difficult bugs. Talking through problems out loud and having
+                  everything recorded has been a game-changer.&quot;
                 </p>
               </CardContent>
             </Card>
@@ -312,9 +312,9 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <p className="italic">
-                  "I used to spend hours stuck on the same problem. With
+                  &quot;I used to spend hours stuck on the same problem. With
                   QuackDebug, I can verbalize my thoughts and often find the
-                  solution just by explaining the problem out loud."
+                  solution just by explaining the problem out loud.&quot;
                 </p>
               </CardContent>
             </Card>
@@ -332,9 +332,9 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <p className="italic">
-                  "The session management feature is brilliant. I can go back to
-                  previous debugging sessions and see exactly how I solved
-                  similar problems in the past."
+                  &quot;The session management feature is brilliant. I can go
+                  back to previous debugging sessions and see exactly how I
+                  solved similar problems in the past.&quot;
                 </p>
               </CardContent>
             </Card>

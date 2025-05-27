@@ -1,5 +1,4 @@
 import { usePathname } from "next/navigation";
-import React from "react";
 
 // Maage paths and active path
 const usePath = () => {

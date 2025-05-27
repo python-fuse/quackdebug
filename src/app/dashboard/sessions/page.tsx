@@ -6,19 +6,18 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { useUser } from "@/contexts/authContext";
 import { DebugSession } from "@/lib/definitions";
 import { capitalize, toast } from "@/lib/utils";
 import DB from "@/supabase/db";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Speech } from "lucide-react";
 
-const page = () => {
+const SessionsPage = () => {
   const [sessions, setSessions] = useState<DebugSession[]>([]);
   const [loading, setLoading] = useState(true);
   const user = useUser();
@@ -118,4 +117,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SessionsPage;

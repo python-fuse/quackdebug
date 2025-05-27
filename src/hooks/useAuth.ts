@@ -19,7 +19,7 @@ const useAuth = () => {
       }
     };
     checkAuth();
-  }, []);
+  }, [router]);
 
   return {
     isAuthenticated,

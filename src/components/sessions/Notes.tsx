@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { Note } from "@/lib/definitions";
 import { Button } from "../ui/button";
@@ -18,6 +19,7 @@ const Notes = ({ notes: initialNotes, sessionId }: NotesProps) => {
   const [noteToEdit, setNoteToEdit] = useState<
     { id: string; content: string } | undefined
   >();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
