@@ -6,6 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { useUser } from "@/contexts/authContext";
 import { DebugSession } from "@/lib/definitions";
@@ -14,6 +15,8 @@ import DB from "@/supabase/db";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Speech } from "lucide-react";
 
 const page = () => {
   const [sessions, setSessions] = useState<DebugSession[]>([]);
@@ -52,29 +55,65 @@ const page = () => {
   }
 
   const sessionsList = sessions.map((session) => (
-    <Card className="rounded-sm hover:shadow-lg duration-300" key={session.id}>
-      <CardContent>
-        <CardHeader>
+    <Card
+      className="rounded-lg hover:shadow-lg duration-300 border-gray-200 overflow-hidden"
+      key={session.id}
+    >
+      <CardContent className="p-0">
+        <CardHeader className="px-4 ">
           <Link
             href={`/dashboard/sessions/${session.id}`}
             className="hover:text-blue-500 duration-300"
           >
-            <CardTitle className="text-xl">
+            <CardTitle className="text-xl flex items-center gap-2">
+              <Speech className="h-5 w-5 text-blue-500" />
               {capitalize(session.title || "")}
             </CardTitle>
           </Link>
           <CardDescription>
-            {new Date(session.created_at || "").toLocaleString()}
+            Created: {new Date(session.created_at || "").toLocaleString()}
           </CardDescription>
         </CardHeader>
+
+        <div className="px-4 pb-2 text-sm text-gray-600">
+          {"No description provided"}
+        </div>
+
+        <div className="  p-3 flex justify-between items-center border-t border-gray-200">
+          <div className="text-xs text-gray-500">
+            ID: {session.id.substring(0, 8)}...
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-blue-600 hover:text-blue-700"
+            asChild
+          >
+            <Link href={`/dashboard/sessions/${session.id}`}>View Details</Link>
+          </Button>
+        </div>
       </CardContent>
     </Card>
   ));
 
   return (
     <div className="flex flex-col space-y-4 p-4">
-      <h2 className="text-3xl font-bold text-gray-800">Sessions</h2>
-      <div className="flex flex-col space-y-2">{sessionsList}</div>
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold text-gray-800">Sessions</h2>
+        {/* <Button
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2"
+          asChild
+        >
+          <Link href="/dashboard">
+            <span>Dashboard</span>
+          </Link>
+        </Button> */}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {sessionsList}
+      </div>
     </div>
   );
 };

@@ -134,6 +134,155 @@ class DB {
   static async deleteTag(id: string) {
     return await supabase.from("tags").delete().eq("id", id);
   }
+
+  // Dashboard Statistics
+  static async getSessionsCount(userId: string) {
+    const { count, error } = await supabase
+      .from("debug_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId);
+
+    return { count, error };
+  }
+
+  static async getRecentSessionsCount(userId: string, days: number = 7) {
+    const dateThreshold = new Date();
+    dateThreshold.setDate(dateThreshold.getDate() - days);
+
+    const { count, error } = await supabase
+      .from("debug_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId)
+      .gte("created_at", dateThreshold.toISOString());
+
+    return { count, error };
+  }
+
+  static async getNotesCount(userId: string) {
+    const { count, error } = await supabase
+      .from("notes")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId);
+
+    return { count, error };
+  }
+
+  static async getRecordingsCount(userId: string) {
+    const { count, error } = await supabase
+      .from("recordings")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId);
+
+    return { count, error };
+  }
+
+  static async getSessionsGrowthRate(userId: string) {
+    // Get count from current month
+    const currentDate = new Date();
+    const firstDayCurrentMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+
+    const { count: currentCount, error: currentError } = await supabase
+      .from("debug_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId)
+      .gte("created_at", firstDayCurrentMonth.toISOString());
+
+    // Get count from previous month
+    const firstDayPreviousMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      1
+    );
+    const lastDayPreviousMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      0
+    );
+
+    const { count: previousCount, error: previousError } = await supabase
+      .from("debug_sessions")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId)
+      .gte("created_at", firstDayPreviousMonth.toISOString())
+      .lte("created_at", lastDayPreviousMonth.toISOString());
+
+    // Calculate growth rate
+    if (previousCount === 0) {
+      return {
+        rate: currentCount && currentCount > 0 ? 100 : 0,
+        isPositive: true,
+      };
+    }
+
+    const growthRate = Math.round(
+      (((currentCount ?? 0) - (previousCount ?? 0)) / (previousCount ?? 1)) *
+        100
+    );
+
+    return {
+      rate: Math.abs(growthRate),
+      isPositive: growthRate >= 0,
+      error: currentError || previousError,
+    };
+  }
+
+  static async getRecordingsGrowthRate(userId: string) {
+    // Get count from current month
+    const currentDate = new Date();
+    const firstDayCurrentMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+
+    const { count: currentCount, error: currentError } = await supabase
+      .from("recordings")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId)
+      .gte("created_at", firstDayCurrentMonth.toISOString());
+
+    // Get count from previous month
+    const firstDayPreviousMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      1
+    );
+    const lastDayPreviousMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      0
+    );
+
+    const { count: previousCount, error: previousError } = await supabase
+      .from("recordings")
+      .select("*", { count: "exact", head: true })
+      .eq("owner_id", userId)
+      .gte("created_at", firstDayPreviousMonth.toISOString())
+      .lte("created_at", lastDayPreviousMonth.toISOString());
+
+    // Calculate growth rate
+    if (previousCount === 0) {
+      return {
+        rate: currentCount && currentCount > 0 ? 100 : 0,
+        isPositive: true,
+      };
+    }
+
+    const growthRate = Math.round(
+      (((currentCount ?? 0) - (previousCount ?? 0)) / (previousCount ?? 1)) *
+        100
+    );
+
+    return {
+      rate: Math.abs(growthRate),
+      isPositive: growthRate >= 0,
+      error: currentError || previousError,
+    };
+  }
 }
 
 export default DB;

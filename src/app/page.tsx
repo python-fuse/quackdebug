@@ -2,14 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Mic,
-  Code,
-  Headphones,
-  Sparkles,
-  ArrowRight,
-  Github,
-} from "lucide-react";
+import { Mic, Code, Headphones, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,8 +11,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useUser } from "@/contexts/authContext";
 
 export default function LandingPage() {
+  const { user } = useUser();
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
@@ -55,11 +50,18 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="/auth/signin">
-              <Button variant="outline" size="sm">
-                Log in
-              </Button>
-            </Link>
+            {user ? (
+              <Link href={"/dashboard"}>
+                <Button variant={"outline"}>Dashboard</Button>
+              </Link>
+            ) : (
+              <Link href="/auth/signin">
+                <Button variant="default" size="sm">
+                  Log in
+                </Button>
+              </Link>
+            )}
+
             {/* <Link href="/auth/signup">
               <Button size="sm">Sign up</Button>
             </Link> */}

@@ -4,9 +4,11 @@ import Recordings from "@/components/sessions/Recordings";
 import { DebugSession, Note, Recording } from "@/lib/definitions";
 import { capitalize } from "@/lib/utils";
 import DB from "@/supabase/db";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const page = () => {
   const params = useParams();
@@ -69,20 +71,35 @@ const page = () => {
 };
 
 const SessionHeader = ({ session }: { session: DebugSession | null }) => {
+  const router = useRouter();
+
   if (!session) return null;
 
   return (
-    <div className="flex justify-between items-center p-4  border-b border-gray-300 ">
-      <div className="flex flex-col">
-        <h1 className="text-2xl font-bold">
-          {capitalize(session?.title || "")}
-        </h1>
+    <div className="flex justify-between items-center p-4 border-b border-gray-300">
+      <div className="flex">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="p-1 h-8 w-8"
+          onClick={() => router.push("/dashboard/sessions")}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
 
-        <p className="text-gray-500 text-xs">
-          {session?.created_at
-            ? new Date(session.created_at).toLocaleString()
-            : "..."}
-        </p>
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 mb-1">
+            <h1 className="text-2xl font-bold">
+              {capitalize(session?.title || "")}
+            </h1>
+          </div>
+
+          <p className="text-gray-500 text-xs">
+            {session?.created_at
+              ? new Date(session.created_at).toLocaleString()
+              : "..."}
+          </p>
+        </div>
       </div>
     </div>
   );

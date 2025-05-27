@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
   return (
     <header className="flex p-2 items-center justify-between bg-white border-b border-gray-200">
-      <div className="flex items-center gap-x-2">
+      <Link href={"/dashboard"} className="flex items-center gap-x-2">
         <Image
           src="/logo.png"
           alt="Logo"
@@ -14,7 +15,7 @@ const Header = () => {
         />
 
         <h1 className="text-2xl font-bold text-gray-800">QuackDebug</h1>
-      </div>
+      </Link>
     </header>
   );
 };
