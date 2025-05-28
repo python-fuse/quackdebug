@@ -1,24 +1,45 @@
+import { toast } from "@/lib/utils";
 import { supabase } from "./index";
 class AuthService {
   redirectTo =
-    process.env.NEXT_PUBLIC_ENVIRONMENT == "dev"
+    process.env.NODE_ENV == "development"
       ? "http://localhost:3000/dashboard"
       : "https://quackdebug.vercel.app/dashboard";
 
   async signInWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: this.redirectTo,
       },
     });
 
-    console.log("Google sign-in data:", data);
-
     if (error) {
       console.error("Error signing in with Google:", error);
-      return null;
+      toast("error", "Failed to sign in with Google. Please try again.");
+      return false;
     }
+
+    toast("success", "Successfully signed in with Google!");
+    return true;
+  }
+
+  async signInWithGitHub() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: this.redirectTo,
+      },
+    });
+
+    if (error) {
+      console.error("Error signing in with GitHub:", error);
+      toast("error", "Failed to sign in with GitHub. Please try again.");
+      return false;
+    }
+
+    toast("success", "Successfully signed in with GitHub!");
+    return true;
   }
 
   async getUser() {

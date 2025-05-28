@@ -37,7 +37,10 @@ const SignIn = () => {
             Continue with Google
           </Button>
 
-          <Button variant={"outline"}>
+          <Button
+            variant={"outline"}
+            onClick={async () => await authService.signInWithGitHub()}
+          >
             <Image src={"/github.svg"} alt="Google" width={20} height={20} />{" "}
             Continue with Github
           </Button>

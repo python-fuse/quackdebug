@@ -82,7 +82,7 @@ export default function LandingPage() {
               thoughts, and helps you solve problems faster.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link href="/auth/sigin">
+              <Link href="/auth/signin">
                 <Button size="lg" className="gap-2">
                   Get Started <ArrowRight className="h-4 w-4" />
                 </Button>
