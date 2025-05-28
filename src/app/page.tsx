@@ -19,7 +19,7 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between py-4 px-10">
+        <div className="max-w-7xl mx-auto flex h-16 items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
@@ -48,6 +48,12 @@ export default function LandingPage() {
             >
               Testimonials
             </Link>
+            <Link
+              href="/feedback"
+              className="text-sm font-medium hover:underline underline-offset-4"
+            >
+              Feedback
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             {user ? (
@@ -71,7 +77,7 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="container py-24 space-y-8 md:py-32 lg:space-y-16">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8 md:py-32 lg:space-y-16">
           <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               Your Voice-Powered <span className="text-primary">Debugging</span>{" "}
@@ -97,7 +103,7 @@ export default function LandingPage() {
               </Link> */}
             </div>
           </div>
-          <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 border rounded-2xl shadow-lg">
+          <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 border rounded-2xl shadow-lg px-10">
             <Image
               src="/logo.png"
               alt="QuackDebug in action"
@@ -139,7 +145,10 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="container py-16 md:py-24">
+        <section
+          id="features"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+        >
           <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               Powerful Features
@@ -220,7 +229,7 @@ export default function LandingPage() {
 
         {/* How It Works Section */}
         <section id="how-it-works" className="bg-muted py-16 md:py-24">
-          <div className="container">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                 How It Works
@@ -267,7 +276,10 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="container py-16 md:py-24">
+        <section
+          id="testimonials"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+        >
           <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               What Developers Say
@@ -341,9 +353,74 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Feedback CTA Section */}
+        <section className="bg-secondary/50 py-16 md:py-24 overflow-hidden relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="relative z-10">
+                <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary font-medium mb-4">
+                  Your Voice Matters
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl mb-4">
+                  Help Us Make QuackDebug{" "}
+                  <span className="text-primary">Better</span>
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 max-w-lg">
+                  We&apos;re constantly improving QuackDebug based on your
+                  feedback. Share your experience, report issues, or suggest new
+                  features to help us build the debugging companion you deserve.
+                </p>
+                <Link href="/feedback">
+                  <Button size="lg" className="gap-2">
+                    Share Feedback <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="relative hidden md:block">
+                <div className="absolute -top-16 -right-16 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
+                <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full filter blur-2xl"></div>
+                <div className="relative bg-background rounded-xl shadow-lg p-6 border">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-message-square-text"
+                      >
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        <path d="M13 8H7" />
+                        <path d="M17 12H7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Quick and Easy</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Simple feedback form, takes less than 2 minutes
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="h-12 w-full bg-secondary/50 rounded-md"></div>
+                    <div className="h-24 w-full bg-secondary/50 rounded-md"></div>
+                    <div className="h-8 w-1/3 bg-primary/80 rounded-md ml-auto"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-0 md:bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-white via-secondary/20 to-transparent"></div>
+        </section>
+
         {/* CTA Section */}
         <section className="bg-primary text-primary-foreground py-16 md:py-24">
-          <div className="container">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                 Ready to Debug Smarter?
@@ -361,8 +438,8 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t py-6 md:py-0 px-10">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+      <footer className="border-t py-6 md:py-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
@@ -374,6 +451,7 @@ export default function LandingPage() {
               © {new Date().getFullYear()} QuackDebug. All rights reserved.
             </p>
           </div>
+
           <div className="flex items-center gap-4">
             <Link
               href="#"
@@ -392,6 +470,13 @@ export default function LandingPage() {
               className="text-sm text-muted-foreground hover:underline underline-offset-4"
             >
               Contact
+            </Link>
+
+            <Link
+              href="https://ucodes.vercel.app"
+              className="text-sm text-muted-foreground hover:underline underline-offset-4"
+            >
+              My Portfolio
             </Link>
           </div>
         </div>

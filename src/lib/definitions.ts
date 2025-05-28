@@ -38,3 +38,17 @@ export type ReactionInsert =
   Database["public"]["Tables"]["reactions"]["Insert"];
 export type ReactionUpdate =
   Database["public"]["Tables"]["reactions"]["Update"];
+
+// Feedback
+// export type Feedback = Database["public"]["Tables"]["feedbacks"]["Row"];
+// export type FeedbackInsert =
+//   Database["public"]["Tables"]["feedbacks"]["Insert"];
+// export type FeedbackUpdate =
+//   Database["public"]["Tables"]["feedbacks"]["Update"];
+
+// create table feedbacks (
+//   id uuid primary key default gen_random_uuid(),
+//   user_id uuid references auth.users(id) on delete set null,
+//   message text not null,
+//   created_at timestamp default now()
+// );
