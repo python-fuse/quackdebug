@@ -34,7 +34,12 @@ export default function useAudioRecorder(): UseAudioRecorderReturn {
     if (audioUrl) {
       URL.revokeObjectURL(audioUrl);
     }
-  }, [stream, audioUrl]);
+
+    if (mediaRecorder) {
+      mediaRecorder.stream.getTracks().forEach((track) => track.stop());
+      setMediaRecorder(null);
+    }
+  }, [stream, mediaRecorder, audioUrl]);
   // Clean up on unmount
   useEffect(() => {
     return () => cleanupMedia();
@@ -62,8 +67,15 @@ export default function useAudioRecorder(): UseAudioRecorderReturn {
       recorder.onstop = () => {
         const blob = new Blob(audioChunksRef.current, { type: "audio/webm" });
         setAudioBlob(blob);
-        const url = URL.createObjectURL(blob);
-        setAudioUrl(url);
+
+        // Also provide data url for playback
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          setAudioUrl(reader.result as string);
+        };
+
+        reader.readAsDataURL(blob);
       };
 
       recorder.start();

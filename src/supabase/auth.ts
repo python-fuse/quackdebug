@@ -7,7 +7,7 @@ class AuthService {
       : "https://quackdebug.vercel.app/dashboard";
 
   async signInWithGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: this.redirectTo,
@@ -20,12 +20,14 @@ class AuthService {
       return false;
     }
 
-    toast("success", "Successfully signed in with Google!");
-    return true;
+    if (data) {
+      toast("success", "Successfully signed in with Google!");
+      return true;
+    }
   }
 
   async signInWithGitHub() {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
         redirectTo: this.redirectTo,
@@ -38,8 +40,10 @@ class AuthService {
       return false;
     }
 
-    toast("success", "Successfully signed in with GitHub!");
-    return true;
+    if (data) {
+      toast("success", "Successfully signed in with GitHub!");
+      return true;
+    }
   }
 
   async getUser() {
